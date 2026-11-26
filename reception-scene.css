@@ -1,0 +1,127 @@
+/* The approved reception scene, scoped to the invitation's reception chapter. */
+.ch-hall.reception-approved {
+  --photo-top: 11.7%;
+  --photo-height: min(63.8%, calc(88.3% - 210px));
+  --photo-x: 50%;
+  --ground: 68.1%;
+  /* Leave room for the scroll cue even when its idle label appears. */
+  --scroll-cue-clearance: 68px;
+  isolation: isolate;
+  overflow: hidden;
+}
+.tiny .ch-hall.reception-approved { --scroll-cue-clearance: 60px; }
+.reception-approved :is(.reception-scene, .scene-art, .background, .shade) {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.reception-approved .reception-scene { opacity: 0; transition: opacity .9s var(--ease); }
+.reception-approved.in .reception-scene { opacity: 1; }
+.reception-approved .scene-art {
+  transform-origin: 50% var(--ground);
+  transform: translate3d(var(--camera-x, 0px), var(--camera-y, 0px), 0) scale(var(--camera-scale, 1));
+}
+.reception-approved .background {
+  inset: -16px;
+  background: #7e7358;
+  transform: translate3d(var(--far-offset, 0px), 0, 0);
+  filter: blur(1.25px);
+}
+.reception-approved :is(.wall, .pavement) {
+  position: absolute;
+  inset-inline: 0;
+  background-image: url("./assets/reception-approved-background.webp");
+  background-repeat: no-repeat;
+}
+.reception-approved .wall {
+  top: 0;
+  bottom: calc(100% - var(--ground) - 16px);
+  background-position: center top;
+  background-size: 100% 112.36%;
+}
+.reception-approved .pavement {
+  top: calc(var(--ground) + 16px);
+  bottom: 0;
+  background-position: center bottom;
+  background-size: 100% 909.09%;
+}
+.reception-approved .photo {
+  position: absolute;
+  top: var(--photo-top);
+  left: var(--photo-x);
+  height: min(var(--photo-height), 159vw);
+  aspect-ratio: 2 / 3;
+  transform: translateX(-50%) scale(1.035);
+  transform-origin: 50% 88.5%;
+}
+.reception-approved .photo-motion {
+  width: 100%;
+  height: 100%;
+  transform: translate3d(var(--near-offset, 0px), 0, 0);
+  mask-image: linear-gradient(90deg, transparent, #000 11%, #000 89%, transparent),
+    linear-gradient(180deg, transparent, #000 6%, #000 98.7%, transparent);
+  mask-composite: intersect;
+}
+.reception-approved .photo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.reception-approved .shade {
+  background:
+    linear-gradient(180deg, #111711af 0%, #11171177 9%, transparent 24%, transparent 65%, #16191173 78%, #181c15d9 100%),
+    linear-gradient(90deg, #141c134f, transparent 25%, transparent 78%, #141c133b);
+}
+.ch-hall.reception-approved .fit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+  pointer-events: none;
+}
+.ch-hall.reception-approved .frame { position: absolute; inset: 0; visibility: hidden; }
+.ch-hall.reception-approved::before,
+.ch-hall.reception-approved .v-info::before { display: none; }
+.ch-hall.reception-approved :is(.v-head, .v-info) {
+  position: absolute;
+  inset-inline: max(17px, env(safe-area-inset-left)) max(17px, env(safe-area-inset-right));
+  margin: 0;
+  text-shadow: 0 2px 14px #10120bc7, 0 1px 3px #10120b9c;
+}
+.ch-hall.reception-approved .v-head { top: max(6.2%, calc(env(safe-area-inset-top) + 12px)); }
+.ch-hall.reception-approved .v-title { font-size: clamp(30px, 8.35vw, 54px); line-height: 1.08; }
+.ch-hall.reception-approved .v-info {
+  bottom: max(6%, calc(var(--bot) + var(--scroll-cue-clearance)));
+}
+.ch-hall.reception-approved .v-place { font-size: clamp(23px, 6.4vw, 35px); line-height: 1.12; }
+.ch-hall.reception-approved .reception-schedule {
+  margin-top: .55em;
+  font-size: clamp(16px, 4.65vw, 22px);
+  line-height: 1.15;
+  color: #efe5d1;
+}
+.ch-hall.reception-approved .v-info .pill {
+  pointer-events: auto;
+  min-height: 44px;
+  margin-top: clamp(11px, 2vh, 18px);
+  padding: .35rem 1.15rem;
+  border-color: #f4dcaa94;
+  color: #fae6bd;
+  background: #1f241dc4;
+}
+@media (max-width: 42rem) and (max-height: 700px) {
+  .ch-hall.reception-approved { --photo-top: 10%; --photo-height: min(62%, calc(90% - 210px)); }
+  .ch-hall.reception-approved .v-head { top: 4.5%; }
+}
+@media (min-width: 48rem) and (orientation: landscape) {
+  .ch-hall.reception-approved { --photo-top: 3.5%; --photo-height: 91%; --photo-x: 68%; }
+  .ch-hall.reception-approved :is(.v-head, .v-info) { right: 58%; left: 5%; }
+  .ch-hall.reception-approved .v-head { top: 31%; }
+  .ch-hall.reception-approved .v-info { top: 49%; bottom: auto; }
+  .reception-approved .shade {
+    background: linear-gradient(90deg, #10150ee0, #11170f97 39%, transparent 62%, #11191044),
+      linear-gradient(180deg, #11171151, transparent 23%, transparent 68%, #181c159e);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reception-approved :is(.scene-art, .background, .photo-motion) { transform: none; }
+  .reception-approved .reception-scene { transition: none; }
+}
