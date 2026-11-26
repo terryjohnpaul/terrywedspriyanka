@@ -51,7 +51,7 @@
   left: var(--photo-x);
   height: min(var(--photo-height), 159vw);
   aspect-ratio: 2 / 3;
-  transform: translateX(-50%) scale(1.035);
+  transform: translateX(-50%) scale(var(--photo-scale, 1.035));
   transform-origin: 50% 88.5%;
 }
 .reception-approved .photo-motion {
@@ -110,6 +110,20 @@
 @media (max-width: 42rem) and (max-height: 700px) {
   .ch-hall.reception-approved { --photo-top: 10%; --photo-height: min(62%, calc(90% - 210px)); }
   .ch-hall.reception-approved .v-head { top: 4.5%; }
+}
+@media (max-width: 42rem) and (orientation: portrait) {
+  .ch-hall.reception-approved {
+    --photo-top: max(7.7%, calc(env(safe-area-inset-top) + 51px));
+    --photo-bottom-space: max(205px, calc(var(--bot) + var(--scroll-cue-clearance) + 124px));
+    --photo-height: min(69%, calc(100% - var(--photo-top) - var(--photo-bottom-space)));
+    --photo-scale: 1.05;
+  }
+  .ch-hall.reception-approved .v-head {
+    top: max(3.1%, calc(env(safe-area-inset-top) + 8px));
+  }
+}
+@media (max-width: 350px) and (orientation: portrait) {
+  .ch-hall.reception-approved .v-title { font-size: 27px; }
 }
 @media (min-width: 48rem) and (orientation: landscape) {
   .ch-hall.reception-approved { --photo-top: 3.5%; --photo-height: 91%; --photo-x: 68%; }
