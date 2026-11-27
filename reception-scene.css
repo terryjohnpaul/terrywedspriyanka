@@ -47,7 +47,7 @@
 }
 .reception-approved .photo {
   position: absolute;
-  top: var(--photo-top);
+  top: calc(var(--photo-top) + var(--photo-drop, 0px));
   left: var(--photo-x);
   height: min(var(--photo-height), 159vw);
   aspect-ratio: 2 / 3;
@@ -111,22 +111,33 @@
   .ch-hall.reception-approved { --photo-top: 10%; --photo-height: min(62%, calc(90% - 210px)); }
   .ch-hall.reception-approved .v-head { top: 4.5%; }
 }
-@media (max-width: 42rem) and (orientation: portrait) {
+@media (orientation: portrait) {
   .ch-hall.reception-approved {
     --photo-top: max(7.7%, calc(env(safe-area-inset-top) + 51px));
-    --photo-bottom-space: max(205px, calc(var(--bot) + var(--scroll-cue-clearance) + 124px));
+    --photo-drop: clamp(9px, 2.2vh, 19px);
+    --photo-bottom-space: max(210px, calc(var(--bot) + var(--scroll-cue-clearance) + 129px));
     --photo-height: min(69%, calc(100% - var(--photo-top) - var(--photo-bottom-space)));
-    --photo-scale: 1.05;
+    --photo-scale: 1.085;
+  }
+  .reception-approved .scene-art {
+    transform: translate3d(calc(var(--camera-x, 0px) * .55), var(--camera-y, 0px), 0) scale(var(--camera-scale, 1));
   }
   .ch-hall.reception-approved .v-head {
     top: max(3.1%, calc(env(safe-area-inset-top) + 8px));
   }
+  .ch-hall.reception-approved .reception-schedule { margin-top: .4em; }
+  .ch-hall.reception-approved .v-info .pill { margin-top: clamp(9px, 1.5vh, 14px); }
 }
 @media (max-width: 350px) and (orientation: portrait) {
   .ch-hall.reception-approved .v-title { font-size: 27px; }
 }
 @media (min-width: 48rem) and (orientation: landscape) {
-  .ch-hall.reception-approved { --photo-top: 3.5%; --photo-height: 91%; --photo-x: 68%; }
+  .ch-hall.reception-approved {
+    --photo-top: 3.5%;
+    --photo-height: 91%;
+    --photo-x: 70%;
+    --photo-scale: 1.06;
+  }
   .ch-hall.reception-approved :is(.v-head, .v-info) { right: 58%; left: 5%; }
   .ch-hall.reception-approved .v-head { top: 31%; }
   .ch-hall.reception-approved .v-info { top: 49%; bottom: auto; }
